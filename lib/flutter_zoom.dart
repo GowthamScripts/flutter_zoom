@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter_zoom/gr_zoom_platform_interface.dart';
-export 'package:flutter_zoom/gr_zoom_platform_interface.dart'
+import 'package:flutter_zoom/flutter_zoom_platform_interface.dart';
+export 'package:flutter_zoom/flutter_zoom_platform_interface.dart'
     show ZoomOptions, ZoomMeetingOptions;
 
 class Zoom {

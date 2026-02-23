@@ -1,21 +1,22 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_zoom/gr_zoom_method_channel.dart';
 
 void main() {
-  MethodChannelZoom platform = MethodChannelZoom();
   const MethodChannel channel = MethodChannel('plugins.webcare/zoom_channel');
 
   TestWidgetsFlutterBinding.ensureInitialized();
+  final messenger =
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
 
   setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
-    });
+    messenger.setMockMethodCallHandler(
+      channel,
+      (MethodCall methodCall) async => '42',
+    );
   });
 
   tearDown(() {
-    channel.setMockMethodCallHandler(null);
+    messenger.setMockMethodCallHandler(channel, null);
   });
 
   test('getPlatformVersion', () async {

@@ -6,19 +6,22 @@ void main() {
   const MethodChannel channel = MethodChannel('plugins.webcare/zoom_channel');
 
   TestWidgetsFlutterBinding.ensureInitialized();
+  final messenger =
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
 
   setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
-    });
+    messenger.setMockMethodCallHandler(
+      channel,
+      (MethodCall methodCall) async => '42',
+    );
   });
 
   tearDown(() {
-    channel.setMockMethodCallHandler(null);
+    messenger.setMockMethodCallHandler(channel, null);
   });
 
   test('getPlatformVersion', () async {
-    Zoom grZoomPlugin = Zoom();
-    expect(await grZoomPlugin.getPlatformVersion(), '42');
+    Zoom zoomPlugin = Zoom();
+    expect(await zoomPlugin.getPlatformVersion(), '42');
   });
 }
