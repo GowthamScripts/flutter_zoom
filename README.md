@@ -3,9 +3,9 @@ A Flutter plugin for the Zoom Client SDK.
 
 ## Zoom SDK Versions
 
-Android: zoom-sdk-android-6.6.11.35500
+Android: zoom-sdk-android-6.6.11 (tested)
  
-iOS: zoom-sdk-ios-6.6.10.30439
+iOS: zoom-sdk-ios-6.6.10 (tested)
 
 ## Installation from pub.dev
 https://pub.dev/packages/flutter_zoom
@@ -15,25 +15,27 @@ After install the library, must run the follow script to get some sdk stuff for 
 flutter pub run flutter_zoom:unzip_zoom_sdk
 ```
 
-This script downloads the proprietary Zoom binaries that are intentionally not committed to source control.
+This script copies the proprietary Zoom binaries (which are intentionally not committed to source control) from SDK folders you place in your app root.
 
 ### No-host setup (recommended)
 
 1. Download the Zoom Meeting SDKs from Zoom.
-2. In your **Flutter app root** (the folder containing `pubspec.yaml`), place the SDK folders with these exact names:
+2. In your **Flutter app root** (the folder containing `pubspec.yaml`), place the extracted SDK folders using this naming pattern:
 
-- `zoom-sdk-android-6.6.11/`
-- `zoom-sdk-ios-6.6.10/`
+- `zoom-sdk-android-6.6.*` (example: `zoom-sdk-android-6.6.11.35500/` or `zoom-sdk-android-6.6.11/`)
+- `zoom-sdk-ios-6.6.*` (example: `zoom-sdk-ios-6.6.10.30439/` or `zoom-sdk-ios-6.6.10/`)
+
+If multiple `6.6.*` folders exist, the script picks the newest one.
 
 The script expects these files inside the folders:
 
 - Android:
-  - `zoom-sdk-android-6.6.11/mobilertc-android-studio/mobilertc/mobilertc.aar`
+  - `zoom-sdk-android-6.6.*/mobilertc-android-studio/mobilertc/mobilertc.aar`
 - iOS:
-  - `zoom-sdk-ios-6.6.10/lib/MobileRTC.xcframework`
-  - `zoom-sdk-ios-6.6.10/lib/MobileRTCScreenShare.xcframework`
-  - `zoom-sdk-ios-6.6.10/lib/zoomcml.xcframework`
-  - `zoom-sdk-ios-6.6.10/lib/MobileRTCResources.bundle`
+  - `zoom-sdk-ios-6.6.*/lib/MobileRTC.xcframework`
+  - `zoom-sdk-ios-6.6.*/lib/MobileRTCScreenShare.xcframework`
+  - `zoom-sdk-ios-6.6.*/lib/zoomcml.xcframework`
+  - `zoom-sdk-ios-6.6.*/lib/MobileRTCResources.bundle`
 
 3. Run:
 
@@ -43,25 +45,6 @@ flutter pub run flutter_zoom:unzip_zoom_sdk
 
 This copies the required binaries into the `flutter_zoom` package (in your `.pub-cache` or local path dependency), under `android/libs/` and `ios/`.
 
-### Configuring the download host
-
-Set `GR_ZOOM_SDK_BASE_URL` to the base URL where you host the Zoom binaries. The script expects:
-
-- Android: `$GR_ZOOM_SDK_BASE_URL/android/6.6.11.35500/mobilertc.aar`
-- iOS:
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64/MobileRTC`
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64_x86_64-simulator/MobileRTC`
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64/MobileRTCScreenShare`
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64_x86_64-simulator/MobileRTCScreenShare`
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64/zoomcml`
-  - `$GR_ZOOM_SDK_BASE_URL/ios/6.6.10.30439/ios-arm64_x86_64-simulator/zoomcml`
-
-Example:
-
-```shell script
-export GR_ZOOM_SDK_BASE_URL="https://your-host.example.com/zoom"
-flutter pub run flutter_zoom:unzip_zoom_sdk
-```
 ## Installation from github
 
 ```yaml
