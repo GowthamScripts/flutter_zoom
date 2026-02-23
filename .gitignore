@@ -1,0 +1,12 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+build/
+
+# Zoom Meeting SDK binaries (must not be committed)
+android/libs/*.aar
+ios/*.xcframework/
+ios/MobileRTCResources.bundle/
