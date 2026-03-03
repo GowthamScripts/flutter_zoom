@@ -142,6 +142,7 @@ Future<bool> _tryCopyFromLocalSdk({
     src: '${iosLibDir.path}/MobileRTCResources.bundle',
     dest: '$pluginRoot/ios/MobileRTCResources.bundle',
   );
+  _validateIosFrameworkStructure(pluginRoot);
 
   // Android: ensure libs dir exists and copy mobilertc.aar.
   final androidLibsDir = Directory('$pluginRoot/android/libs');
@@ -151,6 +152,49 @@ Future<bool> _tryCopyFromLocalSdk({
   await androidAarFile.copy('$pluginRoot/android/libs/mobilertc.aar');
 
   return true;
+}
+
+void _validateIosFrameworkStructure(String pluginRoot) {
+  final checks = <String, List<String>>{
+    'MobileRTC.xcframework': <String>[
+      'ios-arm64',
+      'ios-arm64_x86_64-simulator',
+      'ios-arm64/MobileRTC.framework/MobileRTC',
+      'ios-arm64_x86_64-simulator/MobileRTC.framework/MobileRTC',
+    ],
+    'MobileRTCScreenShare.xcframework': <String>[
+      'ios-arm64',
+      'ios-arm64_x86_64-simulator',
+      'ios-arm64/MobileRTCScreenShare.framework/MobileRTCScreenShare',
+      'ios-arm64_x86_64-simulator/MobileRTCScreenShare.framework/MobileRTCScreenShare',
+    ],
+    'zoomcml.xcframework': <String>[
+      'ios-arm64',
+      'ios-arm64_x86_64-simulator',
+      'ios-arm64/zoomcml.framework/zoomcml',
+      'ios-arm64_x86_64-simulator/zoomcml.framework/zoomcml',
+    ],
+  };
+
+  final missing = <String>[];
+  checks.forEach((framework, entries) {
+    for (final entry in entries) {
+      final fullPath = '$pluginRoot/ios/$framework/$entry';
+      if (FileSystemEntity.typeSync(fullPath) ==
+          FileSystemEntityType.notFound) {
+        missing.add('ios/$framework/$entry');
+      }
+    }
+  });
+
+  if (missing.isNotEmpty) {
+    throw StateError(
+      'Copied iOS SDK frameworks are malformed. Missing expected XCFramework entries:\n'
+      '${missing.map((m) => '- $m').join('\n')}\n\n'
+      'Make sure your local iOS SDK folder contains complete XCFrameworks, then re-run:\n'
+      'flutter pub run flutter_zoom:unzip_zoom_sdk',
+    );
+  }
 }
 
 class _SdkFolder {

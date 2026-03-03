@@ -45,6 +45,26 @@ flutter pub run flutter_zoom:unzip_zoom_sdk
 
 This copies the required binaries into the `flutter_zoom` package (in your `.pub-cache` or local path dependency), under `android/libs/` and `ios/`.
 
+### Troubleshooting (iOS)
+
+- **Podspec validation error (`Missing required attribute homepage`)**
+  - This is fixed in current plugin source. Update to latest `flutter_zoom` and run `flutter pub get` again.
+  - Do not patch files directly inside `.pub-cache`; those changes are temporary and get overwritten.
+- **Simulator build error around `MobileRTC.xcframework/ios-arm64_x86_64-simulator`**
+  - Your local iOS Zoom SDK folder is incomplete or malformed.
+  - Re-extract the Zoom iOS SDK archive and ensure these folders exist under `zoom-sdk-ios-6.6.*/lib/`:
+    - `MobileRTC.xcframework`
+    - `MobileRTCScreenShare.xcframework`
+    - `zoomcml.xcframework`
+    - `MobileRTCResources.bundle`
+  - Re-run:
+
+```shell script
+flutter pub run flutter_zoom:unzip_zoom_sdk
+```
+
+  - The script now validates XCFramework structure and fails early with missing paths if slices are not present.
+
 ## Installation from github
 
 ```yaml
@@ -172,4 +192,4 @@ By default the checker validates only `arm64-v8a` and `x86_64`. To check all ABI
 
 
 # reference
-<your-repo-url>
+https://github.com/GowthamScripts/flutter_zoom

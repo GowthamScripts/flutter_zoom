@@ -5,14 +5,14 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_zoom'
   s.version          = '0.0.2'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'Flutter plugin for Zoom Meeting SDK integration.'
   s.description      = <<-DESC
-A new flutter plugin project.
+flutter_zoom provides a Flutter bridge to the Zoom Meeting SDK for Android and iOS, including plugin wrappers and SDK asset wiring for meeting join/start flows.
                        DESC
-  # TODO: Set `homepage` to your repo URL.
+  s.homepage         = 'https://github.com/GowthamScripts/flutter_zoom'
   s.screenshots = 'https://admhomolapp.com21.com.br/frontend/public/images/logo-principal-pt-br.png', 'https://www.groupsoftware.com.br/wp-content/themes/site-2020/images/marca-group.svg'
   s.social_media_url = 'https://www.facebook.com/groupsoftware'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :type => 'Apache-2.0', :file => '../LICENSE' }
   s.author           = { 'Com21 Software' => 'lucasmartins.m.25@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
